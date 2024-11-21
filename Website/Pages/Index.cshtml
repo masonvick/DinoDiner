@@ -1,0 +1,105 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Dino Diner!</h1>
+    <p>We at Dino Diner are proud to bring you meals straight from the Prehistoric era! Whether you're an herbivore or a carnivore, we have a feast for you!</p>
+</div>
+
+
+<form>
+
+
+    <div class="filter">
+        <h4 style="float: left; padding-right: 30px">Price</h4>
+        Between
+        <input name="PriceMin" type="number" min="0" max="100" step="0.1" placeholder="min" />
+        and
+        <input name="PriceMax" type="number" min="0" max="100" step="0.1" placeholder="max" />
+
+
+    </div>
+
+    <div class="filter">
+        <h4 style="float: left; padding-right: 30px">Calories</h4>
+        Between
+        <input name="CaloriesMin" type="number" min="0" max="1000" step="0.1" placeholder="min" />
+        and
+        <input name="CaloriesMax" type="number" min="0" max="1000" step="0.1" placeholder="max" />
+    </div>
+
+    @foreach (String foodType in DinoDiner.Data.Menu.FoodTypes)
+    {
+        <label>
+            <input type="checkbox" name="FoodTypes" value="@foodType" checked="@Model.FoodTypes.Contains(foodType)" />
+            @foodType
+        </label>
+    }
+    <input type="text" name="SearchTerms" value="@Model.SearchTerms" />
+    <input type="submit" value="Search">
+
+
+</form>
+
+
+<!--ENTREES-->
+<div class="flex-columns">
+    <div>
+        <h1>Entrees</h1>
+        @foreach (DinoDiner.Data.MenuItem item in Model.OrderItems)
+        {
+            var entree = item as DinoDiner.Data.Entrees.Entree;
+            if (entree != null)
+            {
+                <div class="orderitem">
+                    <p class="lead">@item.Name.ToString()</p>
+                    <p>Price: $@item.Price</p>
+                    <p>Calories: @item.Calories</p>
+                    <!-- <p>Description:</p> -->
+                </div>
+            }
+        }
+    </div>
+
+
+        
+
+<!--SIDES-->
+    <div>
+        <h1>Sides</h1>
+        @foreach (DinoDiner.Data.MenuItem item in Model.OrderItems)
+        {
+            var side = item as DinoDiner.Data.Sides.Side;
+            if (side != null)
+            {
+                <div class="orderitem">
+                    <p class="lead">@item.Name.ToString()</p>
+                    <p>Price: $@item.Price</p>
+                    <p>Calories: @item.Calories</p>
+                    <!-- <p>Description:</p> -->
+                </div>
+            }
+        }
+    </div>
+
+<!--DRINKS-->
+    <div>
+        <h1>Drinks</h1>
+        @foreach (DinoDiner.Data.MenuItem item in Model.OrderItems)
+        {
+            var drink = item as DinoDiner.Data.Drinks.Drink;
+            if (drink != null)
+            {
+                <div class="orderitem">
+                    <p class="lead">@item.Name.ToString()</p>
+                    <p>Price: $@item.Price</p>
+                    <p>Calories: @item.Calories</p>
+                    <!-- <p>Description:</p> -->
+                </div>
+            }
+        }
+    </div>
+</div>
